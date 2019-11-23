@@ -1,5 +1,6 @@
 package engsoft.lib.sys;
 
 public interface IEmprestimoEstado {
-	public String getStatus();
+	public boolean atrasado(Emprestimo emp);
+	public String getStatus(Emprestimo emp);
 }

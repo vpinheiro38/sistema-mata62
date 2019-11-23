@@ -10,12 +10,22 @@ public class Emprestimo {
 	
 	private IEmprestimoEstado estado;
 	
-	public Emprestimo() {
+	public Emprestimo(Date dataEmprestimo, Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+		this.dataEmprestimo = dataEmprestimo;
 		this.estado = EmprestimoEmAndamento.getInstance();
 	}
 	
+	public void setEstado(IEmprestimoEstado estado) {
+		this.estado = estado;
+	}
+	
+	public boolean atrasado() {
+		return this.estado.atrasado(this);
+	}
+	
 	public String getStatus() {
-		return this.estado.getStatus();
+		return this.estado.getStatus(this);
 	}
 	
 	public String getTituloLivro() {
@@ -29,4 +39,13 @@ public class Emprestimo {
 	public Date getDataDevolucao() {
 		return this.dataDevolucao;
 	}
+	
+	public ExemplarLivro getExemplar() {
+		return exemplar;
+	}
+
+	public void setExemplar(ExemplarLivro exemplar) {
+		this.exemplar = exemplar;
+	}
+
 }
