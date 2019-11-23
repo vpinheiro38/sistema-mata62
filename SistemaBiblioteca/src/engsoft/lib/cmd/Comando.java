@@ -1,5 +1,13 @@
 package engsoft.lib.cmd;
 
-public interface Comando {
-	public void executar(String[] args);
+import engsoft.lib.sys.BibliotecaFachada;
+
+public abstract class Comando {
+	public BibliotecaFachada fachada;
+	
+	public Comando (BibliotecaFachada fachada) {
+		this.fachada = fachada;
+	}
+	
+	public abstract void executar(String[] args);
 }

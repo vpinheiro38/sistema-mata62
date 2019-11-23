@@ -2,16 +2,17 @@ package engsoft.lib.cmd;
 
 import engsoft.lib.sys.BibliotecaFachada;
 
-public class ConsultarUsuarioCmd implements Comando {
+public class ConsultarUsuarioCmd extends Comando {
 
 	public ConsultarUsuarioCmd(BibliotecaFachada facade) {
-		// TODO Auto-generated constructor stub
+		super(facade);
 	}
 	
 	@Override
 	public void executar(String[] args) {
-		// TODO Auto-generated method stub
-
+		String resposta = this.fachada.consultarUsuario(args[0]);
+		
+		System.out.println(resposta);
 	}
 
 }

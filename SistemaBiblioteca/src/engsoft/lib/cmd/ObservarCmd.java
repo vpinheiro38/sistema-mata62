@@ -1,17 +1,19 @@
 package engsoft.lib.cmd;
 
+import engsoft.lib.help.Mensagens;
 import engsoft.lib.sys.BibliotecaFachada;
 
-public class ObservarCmd implements Comando {
+public class ObservarCmd extends Comando {
 
 	public ObservarCmd(BibliotecaFachada facade) {
-		// TODO Auto-generated constructor stub
+		super(facade);
 	}
 	
 	@Override
 	public void executar(String[] args) {
-		// TODO Auto-generated method stub
-
+		this.fachada.criarObservador(args[0]);
+		
+		System.out.println(Mensagens.OBS_CRIADO);
 	}
 
 }

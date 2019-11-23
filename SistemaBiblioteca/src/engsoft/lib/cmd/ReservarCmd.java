@@ -2,16 +2,17 @@ package engsoft.lib.cmd;
 
 import engsoft.lib.sys.BibliotecaFachada;
 
-public class ReservarCmd implements Comando {
+public class ReservarCmd extends Comando {
 
 	public ReservarCmd(BibliotecaFachada facade) {
-		// TODO Auto-generated constructor stub
+		super(facade);
 	}
 	
 	@Override
 	public void executar(String[] args) {
-		// TODO Auto-generated method stub
-
+		String resposta = this.fachada.realizarReserva(args[0], args[1]);
+		
+		System.out.println(resposta);
 	}
 
 }

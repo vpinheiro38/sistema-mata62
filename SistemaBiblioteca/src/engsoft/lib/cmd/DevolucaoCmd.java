@@ -2,16 +2,17 @@ package engsoft.lib.cmd;
 
 import engsoft.lib.sys.BibliotecaFachada;
 
-public class DevolucaoCmd implements Comando {
+public class DevolucaoCmd extends Comando {
 
 	public DevolucaoCmd(BibliotecaFachada facade) {
-		// TODO Auto-generated constructor stub
+		super(facade);
 	}
 	
 	@Override
 	public void executar(String[] args) {
-		// TODO Auto-generated method stub
-
+		String resposta = this.fachada.realizarDevolucao(args[0], args[1]);
+		
+		System.out.println(resposta);
 	}
 
 }

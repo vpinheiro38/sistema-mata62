@@ -1,12 +1,30 @@
 package engsoft.lib.sys;
 
-import java.util.ArrayList;
+public class ExemplarLivro {
+	
+	private String codigoExemplar;
+	private Livro livro;
+	private boolean emprestado = false;
 
-public class ExemplarLivro extends Livro {
+	public ExemplarLivro(Livro livro, String codigoExemplar) {
+		this.livro = livro;
+		this.codigoExemplar = codigoExemplar;
+	}
 
-	public ExemplarLivro(String codigo, String titulo, String editora, ArrayList<String> autores, int edicao,
-			int anoPublicado) {
-		super(codigo, titulo, editora, autores, edicao, anoPublicado);
+	public Livro getLivro() {
+		return livro;
+	}
+
+	public String getCodigoExemplar() {
+		return codigoExemplar;
+	}
+
+	public boolean isEmprestado() {
+		return emprestado;
+	}
+
+	public void setEmprestado(boolean emprestado) {
+		this.emprestado = emprestado;
 	}
 	
 }
