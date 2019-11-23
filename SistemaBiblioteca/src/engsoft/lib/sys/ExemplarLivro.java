@@ -2,36 +2,38 @@ package engsoft.lib.sys;
 
 public class ExemplarLivro {
 	
-	private String codigoExemplar;
-	private Livro livro;
-	private boolean emprestado = false;
+    private String codigoExemplar;
+    private Livro livro;
+    
+    private IExemplarEstado estado;
 
-	public ExemplarLivro(Livro livro, String codigoExemplar) {
-		this.livro = livro;
-		this.codigoExemplar = codigoExemplar;
-	}
-	
-	public String getTituloLivro() {
-		return this.livro.getTitulo();
-	}
+    public ExemplarLivro(Livro livro, String codigoExemplar) {
+        this.livro = livro;
+        this.codigoExemplar = codigoExemplar;
+        this.estado = ExemplarDisponivel.getInstance();
+    }
 
-	public Livro getLivro() {
-		return livro;
-	}
+    public String getTituloLivro() {
+        return this.livro.getTitulo();
+    }
 
-	public String getCodigoExemplar() {
-		return codigoExemplar;
-	}
+    public Livro getLivro() {
+        return livro;
+    }
 
-	public boolean isEmprestado() {
-		return emprestado;
-	}
+    public String getCodigoExemplar() {
+        return codigoExemplar;
+    }
 
-	public void setEmprestado(boolean emprestado) {
-		this.emprestado = emprestado;
-	}
-	
-	public String getCodigoLivro() {
-		return this.livro.getCodigo();
-	}
+    public void setEstado(IExemplarEstado estado) {
+        this.estado = estado;
+    }
+
+    public String getCodigoLivro() {
+        return this.livro.getCodigo();
+    }
+    
+    public boolean devolver() {
+        return estado.devolver(this);
+    }
 }
