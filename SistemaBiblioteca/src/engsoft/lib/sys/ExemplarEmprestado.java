@@ -29,5 +29,13 @@ public class ExemplarEmprestado implements IExemplarEstado {
 	public String getStatus() {
 		return "Emprestado";
 	}
+	  
+	@Override
+	public boolean devolver(ExemplarLivro exemplar) {
+	    exemplar.setEstado(ExemplarDisponivel.getInstance());
+	    exemplar.setEmprestimo(null);
+	
+	    return true;
+	}
 
 }

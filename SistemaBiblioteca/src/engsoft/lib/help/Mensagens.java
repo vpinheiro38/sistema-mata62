@@ -13,4 +13,9 @@ public abstract class Mensagens {
 			"O usuário não tenha reserva para esse livro e a quantidade de reservas existentes do livro é\nmaior ou igual a de exemplares disponíveis.";
 	public static final String QNT_RESERVAS_LIVRO_RESERVADO = 
 			"O usuário tem reserva para esse livro e a quantidade de reservas existentes do livro é\nmenor a de exemplares disponíveis.";
+	public static final String EXEMPLAR_JA_DEVOLVIDO = "Esse exemplar já foi devolvido!";
+	public static final String EMPRESTIMO_JA_DEVOLVIDO = "Esse empréstimo já foi finalizado e o exemplar devolvido!";
+	public static final String LIVRO_JA_DEVOLVIDO = "Livro já devolvido.";
+	public static final String EMPRESTIMO_INEXISTENTE = "Nenhum empréstimo para esse livro encontrado!";
+	public static final String DEVOLUCAO_SUCESSO = "Devolução realizada com sucesso!";
 }

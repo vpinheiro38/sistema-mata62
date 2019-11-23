@@ -10,9 +10,7 @@ public class DevolucaoCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		String resposta = this.fachada.realizarDevolucao(args[0], args[1]);
-		
-		System.out.println(resposta);
+		this.fachada.realizarDevolucao(args[0], args[1]);
 	}
 
 }

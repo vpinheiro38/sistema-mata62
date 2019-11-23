@@ -1,5 +1,6 @@
 package engsoft.lib.sys;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,39 +40,38 @@ public class Usuario {
 		return podeEmprestar;
 	}
   
-  public List<Emprestimo> getEmprestimosLivro(Livro livro) {
-      List<Emprestimo> emprestimosLivro = new ArrayList();
-
-      for (Emprestimo emprestimo : emprestimos) {
-          String codLivro = emprestimo.getCodigoLivro();
-
-          if (codLivro.equals(livro.getCodigo())) {
-              emprestimosLivro.add(emprestimo);
-          }
-      }
-
-      return emprestimosLivro;
-  }
-
-  public boolean devolverLivro(Livro livro) {
-      List<Emprestimo> emprestimosLivro = this.getEmprestimosLivro(livro);
-
-      for (Emprestimo emprestimo: emprestimosLivro) {
-          if (emprestimo.getCodigoLivro().equals(livro.getCodigo())) {
-              boolean resp = emprestimo.devolver();
-
-              if (resp) return true;
-              else {
-                  System.out.println("Livro já devolvido.");
-                  return false;
-              }
-          }
-      }
-
-      System.out.println("Livro não existe na lista de empréstimos.");
-
-      return false;
-  }
+	public List<Emprestimo> getEmprestimosLivro(Livro livro) {
+	    List<Emprestimo> emprestimosLivro = new ArrayList<Emprestimo>();
+	    for (Emprestimo emprestimo : emprestimos) {
+	        String codLivro = emprestimo.getCodigoLivro();
+	        if (codLivro.equals(livro.getCodigo())) {
+	            emprestimosLivro.add(emprestimo);
+	        }
+	    }
+	
+	    return emprestimosLivro;
+	}
+	
+	public boolean devolverLivro(Livro livro) {
+	    List<Emprestimo> emprestimosLivro = this.getEmprestimosLivro(livro);
+	
+	    for (Emprestimo emprestimo: emprestimosLivro) {
+	        if (emprestimo.getCodigoLivro().equals(livro.getCodigo())) {
+	            boolean resp = emprestimo.devolver();
+	
+	            if (resp)
+	            	return true;
+	            else {
+	                System.out.println(Mensagens.LIVRO_JA_DEVOLVIDO);
+	                return false;
+	            }
+	        }
+	    }
+	
+	    System.out.println(Mensagens.EMPRESTIMO_INEXISTENTE);
+	
+	    return false;
+	}
 	
 	public boolean removeReserva(Livro livro) {
 		for (Reserva res : reservas) {

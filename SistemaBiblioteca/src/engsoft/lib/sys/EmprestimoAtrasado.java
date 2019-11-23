@@ -23,4 +23,10 @@ public class EmprestimoAtrasado implements IEmprestimoEstado {
 		return "Atrasado";
 	}
 
+	@Override
+	public boolean devolver(Emprestimo emprestimo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

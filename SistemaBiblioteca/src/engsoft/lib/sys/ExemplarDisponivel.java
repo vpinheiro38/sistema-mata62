@@ -1,5 +1,7 @@
 package engsoft.lib.sys;
 
+import engsoft.lib.help.Mensagens;
+
 public class ExemplarDisponivel implements IExemplarEstado {
 	
 	private static ExemplarDisponivel instance;
@@ -16,13 +18,6 @@ public class ExemplarDisponivel implements IExemplarEstado {
 	public boolean disponivel() {
 		return true;
 	}
-  
-  @Override
-  public boolean devolver(ExemplarLivro exemplar) {
-      exemplar.setEstado( ExemplarDisponivel.getInstance() );
-
-      return true;
-  }
 
 	@Override
 	public boolean emprestar(ExemplarLivro exemplar, Emprestimo emprestimo) {
@@ -34,7 +29,12 @@ public class ExemplarDisponivel implements IExemplarEstado {
 
 	@Override
 	public String getStatus() {
-		return "DisponÃ­vel";
+		return "Disponível";
 	}
-  
+
+	@Override
+	public boolean devolver(ExemplarLivro exemplar) {
+		System.out.println(Mensagens.EXEMPLAR_JA_DEVOLVIDO);
+		return false;
+	}
 }

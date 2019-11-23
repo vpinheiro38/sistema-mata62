@@ -20,30 +20,26 @@ public class ExemplarLivro {
 	public boolean disponivel() {
 		return this.estado.disponivel();
 	}
-	
+
 	public String getTituloLivro() {
-		return this.livro.getTitulo();
+	    return this.livro.getTitulo();
 	}
-
-  public String getTituloLivro() {
-      return this.livro.getTitulo();
-  }
-
-  public Livro getLivro() {
-      return livro;
-  }
-
-  public String getCodigoExemplar() {
-      return codigoExemplar;
-  }
-
-  public String getCodigoLivro() {
-      return this.livro.getCodigo();
-  }
-    
-  public boolean devolver() {
-      return estado.devolver(this);
-  }
+	
+	public Livro getLivro() {
+	    return livro;
+	}
+	
+	public String getCodigoExemplar() {
+	    return codigoExemplar;
+	}
+	
+	public String getCodigoLivro() {
+	    return this.livro.getCodigo();
+	}
+	    
+	public boolean devolver() {
+	    return estado.devolver(this);
+	}
 
 	public IExemplarEstado getEstado() {
 		return estado;
