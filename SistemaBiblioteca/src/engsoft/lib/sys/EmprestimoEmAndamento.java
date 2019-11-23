@@ -16,8 +16,13 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	}
 	
 	@Override
-	public String getStatus() {
-		return "Em Andamento";
+	public String getStatus(Emprestimo emp) {
+		if (emp.getDataDevolucao().after(Help.getHoje())) {
+			return "Em Andamento";
+		} else {
+			emp.setEstado(EmprestimoAtrasado.getInstance());
+			return emp.getStatus();
+		}
 	}
 
 	@Override
@@ -26,7 +31,7 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 			return false;
 		} else {
 			emp.setEstado(EmprestimoAtrasado.getInstance());
-			return true;
+			return emp.atrasado();
 		}
 	}
 }

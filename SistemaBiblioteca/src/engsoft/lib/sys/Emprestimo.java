@@ -25,7 +25,7 @@ public class Emprestimo {
 	}
 	
 	public String getStatus() {
-		return this.estado.getStatus();
+		return this.estado.getStatus(this);
 	}
 	
 	public String getTituloLivro() {

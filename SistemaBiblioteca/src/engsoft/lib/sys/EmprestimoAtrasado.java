@@ -19,7 +19,7 @@ public class EmprestimoAtrasado implements IEmprestimoEstado {
 	}
 
 	@Override
-	public String getStatus() {
+	public String getStatus(Emprestimo emp) {
 		return "Atrasado";
 	}
 
