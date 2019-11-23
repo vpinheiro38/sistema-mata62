@@ -1,6 +1,6 @@
 package engsoft.lib.sys;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Livro {
 	
@@ -8,14 +8,15 @@ public class Livro {
 	private String titulo;
 	
 	private String editora;
-	private ArrayList<String> autores;
+	private List<String> autores;
 	private int edicao;
 	private int anoPublicado;
 	
-	private ArrayList<ExemplarLivro> exemplares;
-	private ArrayList<Observer> observers;
+	private List<ExemplarLivro> exemplares;
+	private List<Reserva> reservas;
+	private List<IObserver> observers;
 	
-	public Livro(String codigo, String titulo, String editora, ArrayList<String> autores, int edicao, int anoPublicado) {
+	public Livro(String codigo, String titulo, String editora, List<String> autores, int edicao, int anoPublicado) {
 		this.codigo = codigo;
 		this.titulo = titulo;
 		this.editora = editora;
@@ -24,7 +25,17 @@ public class Livro {
 		this.anoPublicado = anoPublicado;
 	}
 	
-	public void registerObserver(Observer obs) {
+	public ExemplarLivro exemplarDisponivel() {
+		for (ExemplarLivro exemplar : exemplares) {
+			if (exemplar.disponivel()) {
+				return exemplar;
+			}
+		}
+		
+		return null;
+	}
+	
+	public void registerObserver(IObserver obs) {
 		observers.add(obs);
 	}
 	
@@ -40,7 +51,7 @@ public class Livro {
 		return editora;
 	}
 
-	public ArrayList<String> getAutores() {
+	public List<String> getAutores() {
 		return autores;
 	}
 
@@ -52,12 +63,20 @@ public class Livro {
 		return anoPublicado;
 	}
 
-	public ArrayList<ExemplarLivro> getExemplares() {
+	public List<ExemplarLivro> getExemplares() {
 		return exemplares;
 	}
 
-	public void setExemplares(ArrayList<ExemplarLivro> exemplares) {
+	public void setExemplares(List<ExemplarLivro> exemplares) {
 		this.exemplares = exemplares;
+	}
+
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
 	}
 	
 }

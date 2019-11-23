@@ -1,5 +1,7 @@
 package engsoft.lib.sys;
 
+import engsoft.lib.help.Help;
+
 public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
 	private static EmprestimoEmAndamento instance;
@@ -15,6 +17,16 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
 	@Override
 	public String getStatus() {
-		return null;
+		return "Em Andamento";
+	}
+
+	@Override
+	public boolean atrasado(Emprestimo emp) {
+		if (emp.getDataDevolucao().after(Help.getHoje())) {
+			return false;
+		} else {
+			emp.setEstado(EmprestimoAtrasado.getInstance());
+			return true;
+		}
 	}
 }

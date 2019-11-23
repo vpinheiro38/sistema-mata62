@@ -1,22 +1,55 @@
 package engsoft.lib.sys;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import engsoft.lib.help.Help;
+import engsoft.lib.help.Mensagens;
 
 public class Usuario {
 	
 	private String codigo;
 	private String nome;
 	
-	private ArrayList<Reserva> reservas;
-	private ArrayList<Emprestimo> emprestimos;
+	private List<Reserva> reservas;
+	private List<Emprestimo> emprestimos;
 	
-	private TipoUsuario tipoUsuario;
+	private ITipoUsuario tipoUsuario;
 	
-	public Usuario(TipoUsuario tipoUsuario) {
+	public Usuario(ITipoUsuario tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	public TipoUsuario getTipoUsuario() {
+	public boolean criarEmprestimo(ExemplarLivro exemplar) {
+		boolean podeEmprestar = this.tipoUsuario.podeEmprestimo(this, exemplar.getLivro());
+		
+		if (podeEmprestar) {
+			Date dataEmprestimo = Help.getHoje();
+			Date dataDevolucao = Help.criarData(this.tipoUsuario.getTempoLimiteEmprestimo());
+			
+			Emprestimo emp = new Emprestimo(dataEmprestimo, dataDevolucao);
+			if (exemplar.emprestar(emp)) {
+				emprestimos.add(emp);
+				removeReserva(exemplar.getLivro());
+			} else {
+				return false;
+			}
+		}
+		
+		return podeEmprestar;
+	}
+	
+	public boolean removeReserva(Livro livro) {
+		for (Reserva res : reservas) {
+			if (res.getLivro() == livro) {
+				reservas.remove(res);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ITipoUsuario getTipoUsuario() {
 		return this.tipoUsuario;
 	}
 	
@@ -34,17 +67,27 @@ public class Usuario {
 		this.nome = nome;
 	}
 	
-	public ArrayList<Reserva> getReservas() {
+	public Reserva getReserva(Livro livro) {
+		for (Reserva res : reservas) {
+			if (res.getLivro() == livro) {
+				return res;
+			}
+		}
+		
+		return null;
+	}
+	
+	public List<Reserva> getReservas() {
 		return reservas;
 	}
-	public void setReservas(ArrayList<Reserva> reservas) {
+	public void setReservas(List<Reserva> reservas) {
 		this.reservas = reservas;
 	}
 	
-	public ArrayList<Emprestimo> getEmprestimos() {
+	public List<Emprestimo> getEmprestimos() {
 		return emprestimos;
 	}
-	public void setEmprestimos(ArrayList<Emprestimo> emprestimo) {
+	public void setEmprestimos(List<Emprestimo> emprestimo) {
 		this.emprestimos = emprestimo;
 	}
 }

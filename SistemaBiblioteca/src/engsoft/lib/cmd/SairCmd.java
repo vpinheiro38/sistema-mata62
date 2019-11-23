@@ -1,5 +1,7 @@
 package engsoft.lib.cmd;
 
+import java.util.Calendar;
+
 import engsoft.lib.sys.BibliotecaFachada;
 
 public class SairCmd extends Comando {
