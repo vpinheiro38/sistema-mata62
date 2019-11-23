@@ -1,53 +1,62 @@
 package engsoft.lib.sys;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class Emprestimo {
+
+  private ExemplarLivro exemplar;
+  private Date dataEmprestimo;
+  private Date dataDevolucao;
+
+  private IEmprestimoEstado estado;
+  
+	public Emprestimo(Date dataEmprestimo, Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+		this.dataEmprestimo = dataEmprestimo;
+		this.estado = EmprestimoEmAndamento.getInstance();
+	}
+  
+  public void setDataDevolucao(Calendar dataDevolucao) {
+      this.dataDevolucao = dataDevolucao;
+  }
+
+  public ExemplarLivro getExemplar() {
+      return this.exemplar;
+  }
+    
+  public String getCodigoLivro() {
+      return this.exemplar.getCodigoLivro();
+  }
+    
+  public boolean devolver() {
+      return estado.devolver(this);
+  }
 	
-    private ExemplarLivro exemplar;
-    private Calendar dataEmprestimo;
-    private Calendar dataDevolucao;
+	public void setEstado(IEmprestimoEstado estado) {
+		this.estado = estado;
+	}
+	
+	public boolean atrasado() {
+		return this.estado.atrasado(this);
+	}
+	
+	public String getStatus() {
+		return this.estado.getStatus(this);
+	}
+	
+	public String getTituloLivro() {
+		return exemplar.getTituloLivro();
+	}
+	
+	public Date getDataEmprestimo() {
+		return this.dataEmprestimo;
+	}
+	
+	public Date getDataDevolucao() {
+		return this.dataDevolucao;
+	}	
 
-    private IEmprestimoEstado estado;
-
-    public Emprestimo() {
-        this.estado = EmprestimoEmAndamento.getInstance();
-    }
-    
-    public String getStatus() {
-        return this.estado.getStatus();
-    }
-
-    public String getTituloLivro() {
-        return exemplar.getTituloLivro();
-    }
-
-    public Calendar getDataEmprestimo() {
-        return this.dataEmprestimo;
-    }
-
-    public Calendar getDataDevolucao() {
-        return this.dataDevolucao;
-    }
-    
-    public void setDataDevolucao(Calendar dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
-    }
-    
-    public void setEstado(IEmprestimoEstado estado) {
-        this.estado = estado;
-    }
-
-    public ExemplarLivro getExemplar() {
-        return this.exemplar;
-    }
-    
-    public String getCodigoLivro() {
-        return this.exemplar.getCodigoLivro();
-    }
-    
-    public boolean devolver() {
-        return estado.devolver(this);
-    }
+	public void setExemplar(ExemplarLivro exemplar) {
+		this.exemplar = exemplar;
+	}
 }

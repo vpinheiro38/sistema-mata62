@@ -1,34 +1,46 @@
 package engsoft.lib.sys;
 
-import java.util.Calendar;
+import engsoft.lib.help.Help;
 
 public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
-    private static EmprestimoEmAndamento instance;
+  private static EmprestimoEmAndamento instance;
 
-    private EmprestimoEmAndamento() {}
+  @Override
+  public boolean devolver(Emprestimo emprestimo) {
+      if (emprestimo.getExemplar().devolver()) {
+          emprestimo.setDataDevolucao( Calendar.getInstance() );
+          emprestimo.setEstado( EmprestimoDevolvido.getInstance() );
 
-    public static IEmprestimoEstado getInstance() {
-        if (instance == null) {
-            instance = new EmprestimoEmAndamento();
-        }
-        return instance;
-    }
+          return true;
+      } else return false;
+  }
+   
+	public static IEmprestimoEstado getInstance() {
+		if (instance == null) {
+			instance = new EmprestimoEmAndamento();
+		}
+		return instance;
+	}
+	
+	@Override
+	public String getStatus(Emprestimo emp) {
+		if (emp.getDataDevolucao().after(Help.getHoje())) {
+			return "Em Andamento";
+		} else {
+			emp.setEstado(EmprestimoAtrasado.getInstance());
+			return emp.getStatus();
+		}
+	}
 
-    @Override
-    public String getStatus() {
-        return null;
-    }
+	@Override
+	public boolean atrasado(Emprestimo emp) {
+		if (emp.getDataDevolucao().after(Help.getHoje())) {
+			return false;
+		} else {
+			emp.setEstado(EmprestimoAtrasado.getInstance());
+			return emp.atrasado();
+		}
+	}
 
-    @Override
-    public boolean devolver(Emprestimo emprestimo) {
-        if (emprestimo.getExemplar().devolver()) {
-            emprestimo.setDataDevolucao( Calendar.getInstance() );
-            emprestimo.setEstado( EmprestimoDevolvido.getInstance() );
-            
-            return true;
-        } else return false;
-    }
-    
-    
 }

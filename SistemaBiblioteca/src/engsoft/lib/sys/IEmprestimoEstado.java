@@ -1,6 +1,7 @@
 package engsoft.lib.sys;
 
 public interface IEmprestimoEstado {
-    public String getStatus();
-    public boolean devolver(Emprestimo emprestimo);
+	public boolean atrasado(Emprestimo emp);
+	public String getStatus(Emprestimo emp);
+  public boolean devolver(Emprestimo emprestimo);
 }

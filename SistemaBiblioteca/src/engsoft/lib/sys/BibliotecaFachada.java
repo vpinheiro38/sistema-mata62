@@ -1,8 +1,10 @@
 package engsoft.lib.sys;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.Map;
+
+import engsoft.lib.help.Mensagens;
 
 public class BibliotecaFachada {
 	
@@ -13,11 +15,17 @@ public class BibliotecaFachada {
 		
 	}
 	
-	public String realizarEmprestimo(String codUsuario, String codLivro) {
-		
-		
-		String resposta = "";
-		return resposta;
+	public void realizarEmprestimo(String codUsuario, String codLivro) {
+		Usuario usuario = getUsuario(codUsuario);
+		Livro livro = getLivro(codLivro);
+		ExemplarLivro exemplar = livro.exemplarDisponivel();
+				
+		if (exemplar != null) {
+			if (usuario.criarEmprestimo(exemplar))
+				System.out.println(Mensagens.EMPRESTIMO_SUCESSO);
+		} else {
+			System.out.println(Mensagens.LIVRO_INDISPONIVEL);
+		}
 	}
 	
 	public String realizarDevolucao(String codUsuario, String codLivro) {
@@ -49,17 +57,17 @@ public class BibliotecaFachada {
 	
 	public String consultarUsuario(String codUsuario) {
 		Usuario usuario = getUsuario(codUsuario);
-		ArrayList<Emprestimo> emprestimos = usuario.getEmprestimos();
-		ArrayList<Reserva> reservas = usuario.getReservas();
+		List<Emprestimo> emprestimos = usuario.getEmprestimos();
+		List<Reserva> reservas = usuario.getReservas();
 	
 		String resposta = "Consulta para o usu�rio " + usuario.getNome() + "\nEmpr�stimos: \n";
 		
 		for (Emprestimo emp : emprestimos) {
 			String livro = emp.getTituloLivro();
-			Date dataEmp = emp.getDataEmprestimo();			
+			Date dataEmp = emp.getDataEmprestimo();
 			
 			String status = emp.getStatus();
-			String respEmp = "- Livro " + livro + " emprestado em " + dataEmp.toString() + ". Status: " + status + ". "; 
+			String respEmp = "- Livro " + livro + " emprestado em " + dataEmp.toString() + ". Status: " + status + ". ";
 			if (status == "Devolvido") {
 				respEmp += "Devolvido em " + emp.getDataDevolucao().toString() + ".";
 			} else {
@@ -94,7 +102,7 @@ public class BibliotecaFachada {
 		Livro livro = getLivro(codLivro);
 		Usuario professor = getUsuario(codUsuario);
 		
-		livro.registerObserver((Observer) professor.getTipoUsuario());
+		livro.registerObserver((IObserver) professor.getTipoUsuario());
 	}
 
 	public Map<String, Usuario> getUsuarios() {

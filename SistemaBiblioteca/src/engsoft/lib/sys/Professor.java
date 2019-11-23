@@ -1,21 +1,41 @@
 package engsoft.lib.sys;
 
-public class Professor implements TipoUsuario, Observer {
+import java.util.List;
+
+import engsoft.lib.help.Mensagens;
+
+public class Professor implements ITipoUsuario, IObserver {
 	
-	private int tempoLimiteEmprestimo = 7;
-	private int limiteEmprestimo = -1; // Não possui limite para ter empréstimo
+	public int qntNotificacoes = 0;
 	
 	public int getLimiteEmprestimo() {
-		return limiteEmprestimo;
+		return 7;
 	}
 	
 	public int getTempoLimiteEmprestimo() {
-		return tempoLimiteEmprestimo;
+		return -1;
 	}
 
 	@Override
 	public int getQntNotificacoes() {
-		return 0;
+		return this.qntNotificacoes;
+	}
+
+	@Override
+	public int getLimiteReserva() {
+		return 3;
+	}
+
+	@Override
+	public boolean podeEmprestimo(Usuario usuario, Livro livro) {
+		List<Emprestimo> emprestimos = usuario.getEmprestimos();
+		for (Emprestimo emp : emprestimos) {
+			if (emp.atrasado()) {
+				System.out.println(Mensagens.USUARIO_DEVEDOR);
+				return false;
+			}
+		}
+		return true;
 	}
 
 }
