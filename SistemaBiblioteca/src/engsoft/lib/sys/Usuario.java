@@ -47,4 +47,16 @@ public class Usuario {
 	public void setEmprestimos(ArrayList<Emprestimo> emprestimo) {
 		this.emprestimos = emprestimo;
 	}
+	
+	public List<Emprestimo> getEmprestimosLivro(Livro livro) {
+		List<Emprestimo> emprestimosLivro = new ArrayList();
+
+		for (Emprestimo emprestimo : emprestimos) {
+			String codLivro = emprestimo.getCodigoLivro();
+
+			if (codLivro.equals(livro.getCodigo())) {
+				emprestimosLivro.add(emprestimo)
+			}
+		}
+	}
 }

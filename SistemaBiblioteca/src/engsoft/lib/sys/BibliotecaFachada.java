@@ -21,9 +21,15 @@ public class BibliotecaFachada {
 	}
 	
 	public String realizarDevolucao(String codUsuario, String codLivro) {
-		
-		
 		String resposta = "";
+
+		Usuario usuario = getUsuario(codUsuario);
+		Livro livro = getLivro(codLivro);
+
+		boolean resp = usuario.devolverLivro(livro)
+
+		if (boo)
+
 		return resposta;
 	}
 	
@@ -46,7 +52,7 @@ public class BibliotecaFachada {
 		ArrayList<Emprestimo> emprestimos = usuario.getEmprestimos();
 		ArrayList<Reserva> reservas = usuario.getReservas();
 	
-		String resposta = "Consulta para o usuário " + usuario.getNome() + "\nEmpréstimos: \n";
+		String resposta = "Consulta para o usuï¿½rio " + usuario.getNome() + "\nEmprï¿½stimos: \n";
 		
 		for (Emprestimo emp : emprestimos) {
 			String livro = emp.getTituloLivro();
@@ -57,7 +63,7 @@ public class BibliotecaFachada {
 			if (status == "Devolvido") {
 				respEmp += "Devolvido em " + emp.getDataDevolucao().toString() + ".";
 			} else {
-				respEmp += "Devolução prevista para" + emp.getDataDevolucao().toString() + ".";
+				respEmp += "Devoluï¿½ï¿½o prevista para" + emp.getDataDevolucao().toString() + ".";
 			}
 			
 			resposta += respEmp + "\n";

@@ -31,4 +31,7 @@ public class ExemplarLivro {
 		this.emprestado = emprestado;
 	}
 	
+	public String getCodigoLivro() {
+		return this.livro.getCodigo();
+	}
 }

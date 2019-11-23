@@ -28,5 +28,9 @@ public class Emprestimo {
 	
 	public Date getDataDevolucao() {
 		return this.dataDevolucao;
-	}
+    }
+    
+    public String getCodigoLivro() {
+        return this.exemplar.getCodigoLivro();
+    }
 }
