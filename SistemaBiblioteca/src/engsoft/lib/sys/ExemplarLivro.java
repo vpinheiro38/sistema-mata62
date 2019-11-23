@@ -7,10 +7,11 @@ public class ExemplarLivro {
 	private IExemplarEstado estado;
 	private Emprestimo emprestimo;
 
-	public ExemplarLivro(Livro livro, String codigoExemplar) {
-		this.livro = livro;
-		this.codigoExemplar = codigoExemplar;
-	}
+  public ExemplarLivro(Livro livro, String codigoExemplar) {
+      this.livro = livro;
+      this.codigoExemplar = codigoExemplar;
+      this.estado = ExemplarDisponivel.getInstance();
+  }
 	
 	public boolean emprestar(Emprestimo emp) {		
 		return this.estado.emprestar(this, emp);
@@ -24,13 +25,25 @@ public class ExemplarLivro {
 		return this.livro.getTitulo();
 	}
 
-	public Livro getLivro() {
-		return livro;
-	}
+  public String getTituloLivro() {
+      return this.livro.getTitulo();
+  }
 
-	public String getCodigoExemplar() {
-		return codigoExemplar;
-	}
+  public Livro getLivro() {
+      return livro;
+  }
+
+  public String getCodigoExemplar() {
+      return codigoExemplar;
+  }
+
+  public String getCodigoLivro() {
+      return this.livro.getCodigo();
+  }
+    
+  public boolean devolver() {
+      return estado.devolver(this);
+  }
 
 	public IExemplarEstado getEstado() {
 		return estado;

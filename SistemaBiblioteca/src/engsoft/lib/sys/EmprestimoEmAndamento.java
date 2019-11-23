@@ -4,10 +4,18 @@ import engsoft.lib.help.Help;
 
 public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
-	private static EmprestimoEmAndamento instance;
-	
-	private EmprestimoEmAndamento() {}
+  private static EmprestimoEmAndamento instance;
 
+  @Override
+  public boolean devolver(Emprestimo emprestimo) {
+      if (emprestimo.getExemplar().devolver()) {
+          emprestimo.setDataDevolucao( Calendar.getInstance() );
+          emprestimo.setEstado( EmprestimoDevolvido.getInstance() );
+
+          return true;
+      } else return false;
+  }
+   
 	public static IEmprestimoEstado getInstance() {
 		if (instance == null) {
 			instance = new EmprestimoEmAndamento();
@@ -34,4 +42,5 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 			return emp.atrasado();
 		}
 	}
+
 }

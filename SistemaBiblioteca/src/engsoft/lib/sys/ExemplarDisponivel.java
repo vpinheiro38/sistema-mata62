@@ -16,6 +16,13 @@ public class ExemplarDisponivel implements IExemplarEstado {
 	public boolean disponivel() {
 		return true;
 	}
+  
+  @Override
+  public boolean devolver(ExemplarLivro exemplar) {
+      exemplar.setEstado( ExemplarDisponivel.getInstance() );
+
+      return true;
+  }
 
 	@Override
 	public boolean emprestar(ExemplarLivro exemplar, Emprestimo emprestimo) {
@@ -27,7 +34,7 @@ public class ExemplarDisponivel implements IExemplarEstado {
 
 	@Override
 	public String getStatus() {
-		return "Disponível";
+		return "DisponÃ­vel";
 	}
-
+  
 }
