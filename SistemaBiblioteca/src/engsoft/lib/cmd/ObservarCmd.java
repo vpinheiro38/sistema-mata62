@@ -11,7 +11,7 @@ public class ObservarCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		this.fachada.criarObservador(args[0]);
+		this.fachada.criarObservador(args[0], args[1]);
 		
 		System.out.println(Mensagens.OBS_CRIADO);
 	}

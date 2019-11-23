@@ -13,6 +13,7 @@ public class Livro {
 	private int anoPublicado;
 	
 	private ArrayList<ExemplarLivro> exemplares;
+	private ArrayList<Observer> observers;
 	
 	public Livro(String codigo, String titulo, String editora, ArrayList<String> autores, int edicao, int anoPublicado) {
 		this.codigo = codigo;
@@ -21,6 +22,10 @@ public class Livro {
 		this.autores = autores;
 		this.edicao = edicao;
 		this.anoPublicado = anoPublicado;
+	}
+	
+	public void registerObserver(Observer obs) {
+		observers.add(obs);
 	}
 	
 	public String getCodigo() {

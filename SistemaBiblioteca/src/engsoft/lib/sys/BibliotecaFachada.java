@@ -66,8 +66,8 @@ public class BibliotecaFachada {
 		resposta += "Reservas: ";
 		
 		for (Reserva res : reservas) {
-			String livro = res.getLivro();
-			Date solicitacao = res.getDataSolicitacao();
+			String livro = res.getTituloLivro();
+			Date solicitacao = res.getDataReserva();
 			
 			String respRes = "- " + livro + " reservado em " + solicitacao + ".";
 			resposta += respRes = "\n";
@@ -88,7 +88,7 @@ public class BibliotecaFachada {
 		Livro livro = getLivro(codLivro);
 		Usuario professor = getUsuario(codUsuario);
 		
-		livro.registerObserver(professor.getTipoUsuario());
+		livro.registerObserver((Observer) professor.getTipoUsuario());
 	}
 
 	public Map<String, Usuario> getUsuarios() {

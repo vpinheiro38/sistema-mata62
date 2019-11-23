@@ -10,6 +10,10 @@ public class ExemplarLivro {
 		this.livro = livro;
 		this.codigoExemplar = codigoExemplar;
 	}
+	
+	public String getTituloLivro() {
+		return this.livro.getTitulo();
+	}
 
 	public Livro getLivro() {
 		return livro;
