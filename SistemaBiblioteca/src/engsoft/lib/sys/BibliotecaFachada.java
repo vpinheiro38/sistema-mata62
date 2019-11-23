@@ -39,21 +39,15 @@ public class BibliotecaFachada {
 		}
 	}
 	
-	public String realizarReserva(String codUsuario, String codLivro) {
+	public void realizarReserva(String codUsuario, String codLivro) {
 		
-		
-		String resposta = "";
-		return resposta;
 	}
 	
-	public String consultarLivro(String codLivro) {
+	public void consultarLivro(String codLivro) {
 
-		
-		String resposta = "";
-		return resposta;		
 	}
 	
-	public String consultarUsuario(String codUsuario) {
+	public void consultarUsuario(String codUsuario) {
 		Usuario usuario = getUsuario(codUsuario);
 		List<Emprestimo> emprestimos = usuario.getEmprestimos();
 		List<Reserva> reservas = usuario.getReservas();
@@ -81,19 +75,18 @@ public class BibliotecaFachada {
 			String livro = res.getTituloLivro();
 			Date solicitacao = res.getDataReserva();
 			
-			String respRes = "- " + livro + " reservado em " + solicitacao + ".";
-			resposta += respRes = "\n";
+			resposta += "- " + livro + " reservado em " + solicitacao + ".\n";
 		}
 		
-		return resposta;
+		System.out.println(resposta);
 	}
 	
-	public String consultarProfessor(String codUsuario) {
+	public void consultarProfessor(String codUsuario) {
 		Usuario professor = getUsuario(codUsuario);
 		int notificacoes = professor.getTipoUsuario().getQntNotificacoes();
 		
 		String resposta = "Esse professor foi notificado " + notificacoes + " vezes.";
-		return resposta;
+		System.out.println(resposta);
 	}
 	
 	public void criarObservador(String codUsuario, String codLivro) {

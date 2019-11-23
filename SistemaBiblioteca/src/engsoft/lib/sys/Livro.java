@@ -2,7 +2,7 @@ package engsoft.lib.sys;
 
 import java.util.List;
 
-public class Livro {
+public class Livro implements ISubject {
 	
 	private String codigo;
 	private String titulo;
@@ -35,8 +35,29 @@ public class Livro {
 		return null;
 	}
 	
-	public void registerObserver(IObserver obs) {
+	@Override
+	public boolean registerObserver(IObserver obs) {
 		observers.add(obs);
+		return true;
+	}
+
+	@Override
+	public boolean removeObserver(IObserver obs) {
+		int index = observers.indexOf(obs);
+		observers.remove(index);
+		return true;
+	}
+
+	@Override
+	public void notifyObservers() {
+		for (IObserver obs : observers) {
+			obs.update();
+		}
+	}
+	
+	public void reservasChanged() {
+		if (reservas.size() >= 2)
+			notifyObservers();
 	}
 	
 	public String getCodigo() {
@@ -77,6 +98,7 @@ public class Livro {
 
 	public void setReservas(List<Reserva> reservas) {
 		this.reservas = reservas;
+		reservasChanged();
 	}
 	
 }
