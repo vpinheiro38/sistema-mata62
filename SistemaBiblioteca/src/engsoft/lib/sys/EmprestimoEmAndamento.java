@@ -1,6 +1,7 @@
 package engsoft.lib.sys;
 
 import engsoft.lib.help.Help;
+import engsoft.lib.help.Mensagens;
 
 public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
@@ -29,7 +30,7 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	@Override
 	public String getStatus(Emprestimo emp) {
 		if (emp.getDataDevolucao().after(Help.getHoje())) {
-			return "Em Andamento";
+			return Mensagens.EM_CURSO;
 		} else {
 			emp.setEstado(EmprestimoAtrasado.getInstance());
 			return emp.getStatus();

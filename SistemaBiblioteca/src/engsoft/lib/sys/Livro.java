@@ -24,9 +24,9 @@ public class Livro implements ISubject {
 		this.edicao = edicao;
 		this.anoPublicado = anoPublicado;
                 
-        this.reservas = new ArrayList<>();
-        this.exemplares = new ArrayList<>(); 
-        this.observers = new ArrayList<>();
+        this.reservas = new ArrayList<Reserva>();
+        this.exemplares = new ArrayList<ExemplarLivro>(); 
+        this.observers = new ArrayList<IObserver>();
 	}
 	
 	public ExemplarLivro exemplarDisponivel() {
@@ -90,6 +90,12 @@ public class Livro implements ISubject {
 
 	public List<ExemplarLivro> getExemplares() {
 		return this.exemplares;
+	}
+	
+	public ExemplarLivro addExemplar(String codigo) {
+		ExemplarLivro exemplar = new ExemplarLivro(this, codigo);
+		this.exemplares.add(exemplar);
+		return exemplar;
 	}
         
     public boolean reservar(Reserva reserva) {

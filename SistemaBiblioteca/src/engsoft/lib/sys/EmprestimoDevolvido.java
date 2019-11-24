@@ -28,7 +28,7 @@ public class EmprestimoDevolvido implements IEmprestimoEstado {
 
     @Override
     public String getStatus(Emprestimo emp) {
-        return "Devolvido";
+        return Mensagens.DEVOLVIDO;
     }    
     
 }

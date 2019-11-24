@@ -9,12 +9,21 @@ import engsoft.lib.help.Mensagens;
 
 public class BibliotecaFachada {
 	
+	private static BibliotecaFachada instance;
+	
 	private Map<String, Livro> livros;
 	private Map<String, Usuario> usuarios;
 	
-	public BibliotecaFachada () {
+	private BibliotecaFachada () {
         livros = new HashMap<>();
         usuarios = new HashMap<>();
+	}
+	
+	public static BibliotecaFachada getInstance() {
+		if (instance == null) {
+			instance = new BibliotecaFachada();
+		}
+		return instance;
 	}
 	
 	public void realizarEmprestimo(String codUsuario, String codLivro) {
@@ -24,7 +33,7 @@ public class BibliotecaFachada {
 				
 		if (exemplar != null) {
 			if (usuario.criarEmprestimo(exemplar))
-				System.out.println(Mensagens.EMPRESTIMO_SUCESSO);
+				System.out.println(String.format(Mensagens.EMPRESTIMO_SUCESSO, livro.getTitulo(), usuario.getNome()));
 		} else {
 			System.out.println(Mensagens.LIVRO_INDISPONIVEL);
 		}
@@ -56,28 +65,32 @@ public class BibliotecaFachada {
             System.out.println("Livro " + livro.getCodigo());
             System.out.println("Título: " + livro.getTitulo());
             
-            System.out.println("Reservas: " + livro.getReservas().size());
+            System.out.println(Mensagens.RESERVAS + ": " + livro.getReservas().size());
             for (Reserva reserva: livro.getReservas()) {
                 Usuario usuario = reserva.getUsuario();
                 System.out.println("- " + usuario.getNome() + " reservado em " + reserva.getDataReserva());
             }
 
             System.out.println("Exemplares:");
-            for (ExemplarLivro exemplar: livro.getExemplares()) {
-                System.out.print("- Código: " + exemplar.getCodigoExemplar() 
-                    + " | Status: " + exemplar.getStatus()
-                );
-                
-                if (exemplar.getStatus().equals("Emprestado")) {
-                    Emprestimo emp = exemplar.getEmprestimo();
-                    System.out.print(
-                        " | Usuário: " + emp.getUsuario().getNome()
-                        + " | Data do empréstimo: " + emp.getDataEmprestimo()
-                        + " | Data de devolução: " + emp.getDataDevolucao()
-                    );
-                }
-                
-                System.out.println("");
+            if (livro.getExemplares().size() > 0) {            	
+            	for (ExemplarLivro exemplar: livro.getExemplares()) {
+            		System.out.print("- Código: " + exemplar.getCodigoExemplar() 
+            		+ " | Status: " + exemplar.getStatus()
+            				);
+            		
+            		if (exemplar.getStatus().equals(Mensagens.EMPRESTADO)) {
+            			Emprestimo emp = exemplar.getEmprestimo();
+            			System.out.print(
+            					" | Usuário: " + emp.getUsuario().getNome()
+            					+ " | Data do empréstimo: " + emp.getDataEmprestimo()
+            					+ " | Data de devolução: " + emp.getDataDevolucao()
+            					);
+            		}
+            		
+            		System.out.println("");
+            	}
+            } else {
+            	System.out.println(Mensagens.LIVRO_SEM_EXEMPLARES);
             }
 	}
 	
@@ -86,30 +99,38 @@ public class BibliotecaFachada {
 		List<Emprestimo> emprestimos = usuario.getEmprestimos();
 		List<Reserva> reservas = usuario.getReservas();
 	
-		String resposta = "Consulta para o usu�rio " + usuario.getNome() + "\nEmpr�stimos: \n";
+		String resposta = String.format(Mensagens.CONSULTA_USUARIO, usuario.getNome()) + "\n" + Mensagens.EMPRESTIMOS + ": \n";
 		
-		for (Emprestimo emp : emprestimos) {
-			String livro = emp.getTituloLivro();
-			Date dataEmp = emp.getDataEmprestimo();
-			
-			String status = emp.getStatus();
-			String respEmp = "- Livro " + livro + " emprestado em " + dataEmp.toString() + ". Status: " + status + ". ";
-			if (status == "Devolvido") {
-				respEmp += "Devolvido em " + emp.getDataDevolucao().toString() + ".";
-			} else {
-				respEmp += "Devolu��o prevista para" + emp.getDataDevolucao().toString() + ".";
+		if (emprestimos.size() > 0) {
+			for (Emprestimo emp : emprestimos) {
+				String livro = emp.getTituloLivro();
+				Date dataEmp = emp.getDataEmprestimo();
+				
+				String status = emp.getStatus();
+				String respEmp = "- Livro " + livro + " emprestado em " + dataEmp.toString() + ". Status: " + status + ". ";
+				if (status == Mensagens.DEVOLVIDO) {
+					respEmp += String.format(Mensagens.DEVOLVIDO_DATA, emp.getDataDevolucao().toString());
+				} else {
+					respEmp += String.format(Mensagens.DEVOLUCAO_PREVISTA, emp.getDataDevolucao().toString());
+				}
+				
+				resposta += respEmp + "\n";
 			}
-			
-			resposta += respEmp + "\n";
+		} else {
+			resposta += Mensagens.SEM_EMPRESTIMO + "\n";
 		}
 		
-		resposta += "Reservas: ";
+		resposta += Mensagens.RESERVAS + ": \n";
 		
-		for (Reserva res : reservas) {
-			String livro = res.getTituloLivro();
-			Date solicitacao = res.getDataReserva();
-			
-			resposta += "- " + livro + " reservado em " + solicitacao + ".\n";
+		if (reservas.size() > 0) {			
+			for (Reserva res : reservas) {
+				String livro = res.getTituloLivro();
+				Date solicitacao = res.getDataReserva();
+				
+				resposta += String.format(Mensagens.LIVRO_RESERVAS, livro, solicitacao.toString());
+			}			
+		} else {
+			resposta += Mensagens.SEM_RESERVA + "\n";
 		}
 		
 		System.out.println(resposta);
@@ -119,7 +140,7 @@ public class BibliotecaFachada {
 		Usuario professor = getUsuario(codUsuario);
 		int notificacoes = professor.getTipoUsuario().getQntNotificacoes();
 		
-		String resposta = "Esse professor foi notificado " + notificacoes + " vezes.";
+		String resposta = String.format(Mensagens.PROF_NOTIFICADO, notificacoes);
 		System.out.println(resposta);
 	}
 	
@@ -138,8 +159,10 @@ public class BibliotecaFachada {
 		this.usuarios = usuarios;
 	}
 	
-	public void addUsuario(String nome, String codigo, ITipoUsuario tipoUsuario) {
-		this.usuarios.put(codigo, new Usuario(codigo, nome, tipoUsuario));
+	public Usuario addUsuario(String nome, String codigo, ITipoUsuario tipoUsuario) {
+		Usuario usuario = new Usuario(codigo, nome, tipoUsuario);
+		this.usuarios.put(codigo, usuario);
+		return usuario;
 	}
 	
 	public Usuario getUsuario(String codigo) {
@@ -158,7 +181,9 @@ public class BibliotecaFachada {
 		return this.livros.get(codigo);
 	}
 	
-	public void addLivro(String codigo, String titulo, String editora, List<String> autores, int edicao, int anoPublicado) {
-		this.livros.put(codigo, new Livro(codigo, titulo, editora, autores, edicao, anoPublicado));
+	public Livro addLivro(String codigo, String titulo, String editora, List<String> autores, int edicao, int anoPublicado) {
+		Livro livro = new Livro(codigo, titulo, editora, autores, edicao, anoPublicado);
+		this.livros.put(codigo, livro);
+		return livro;
 	}
 }

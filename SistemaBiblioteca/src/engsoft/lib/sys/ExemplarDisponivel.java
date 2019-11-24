@@ -29,7 +29,7 @@ public class ExemplarDisponivel implements IExemplarEstado {
 
 	@Override
 	public String getStatus() {
-		return "Dispon�vel";
+		return Mensagens.DISPONIVEL;
 	}
 
 	@Override

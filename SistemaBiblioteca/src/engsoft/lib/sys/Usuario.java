@@ -46,12 +46,12 @@ public class Usuario {
         
 	public boolean reservarLivro(Livro livro) {
 	    if (this.getReserva(livro) != null) {
-	        System.out.println("Livro já reservado.");
+	        System.out.println(Mensagens.LIVRO_JA_RESERVADO);
 	        return false;
 	    }
 	    
 	    if (!tipoUsuario.podeReservar(this)) {
-	        System.out.println("Limite máximo de reservas.");
+	        System.out.println(Mensagens.MAXIMO_RESERVAS);
 	        return false;
 	    }
 	    

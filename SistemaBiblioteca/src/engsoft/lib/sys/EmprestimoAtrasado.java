@@ -1,5 +1,7 @@
 package engsoft.lib.sys;
 
+import engsoft.lib.help.Mensagens;
+
 public class EmprestimoAtrasado implements IEmprestimoEstado {
 	
 	private static EmprestimoAtrasado instance;
@@ -20,12 +22,11 @@ public class EmprestimoAtrasado implements IEmprestimoEstado {
 
 	@Override
 	public String getStatus(Emprestimo emp) {
-		return "Atrasado";
+		return Mensagens.ATRASADO;
 	}
 
 	@Override
 	public boolean devolver(Emprestimo emprestimo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

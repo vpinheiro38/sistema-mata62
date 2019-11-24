@@ -27,7 +27,7 @@ public class ExemplarEmprestado implements IExemplarEstado {
 
 	@Override
 	public String getStatus() {
-		return "Emprestado";
+		return Mensagens.EMPRESTADO;
 	}
 	  
 	@Override
