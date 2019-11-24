@@ -3,7 +3,7 @@ package engsoft.lib.sys;
 import java.util.Date;
 
 public class Emprestimo {
-
+        private Usuario usuario;
 	private ExemplarLivro exemplar;
 	private Date dataEmprestimo;
 	private Date dataDevolucao;
@@ -15,6 +15,14 @@ public class Emprestimo {
 		this.dataEmprestimo = dataEmprestimo;
 		this.estado = EmprestimoEmAndamento.getInstance();
 	}
+        
+        public Usuario getUsuario() {
+            return usuario;
+        }
+        
+        public void setUsuario(Usuario usuario) {
+            this.usuario = usuario;
+        }
 	  
 	public void setDataDevolucao(Date dataDevolucao) {
 	    this.dataDevolucao = dataDevolucao;

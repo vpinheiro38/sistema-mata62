@@ -6,6 +6,7 @@ import java.util.List;
 
 import engsoft.lib.help.Help;
 import engsoft.lib.help.Mensagens;
+import java.util.Calendar;
 
 public class Usuario {
 	
@@ -17,8 +18,10 @@ public class Usuario {
 	
 	private ITipoUsuario tipoUsuario;
 	
-	public Usuario(ITipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public Usuario(String codigo, String nome, ITipoUsuario tipoUsuario) {
+            this.codigo = codigo;
+            this.nome = nome;
+            this.tipoUsuario = tipoUsuario;
 	}
 	
 	public boolean criarEmprestimo(ExemplarLivro exemplar) {
@@ -39,9 +42,26 @@ public class Usuario {
 		
 		return podeEmprestar;
 	}
+        
+        public boolean reservarLivro(Livro livro) {
+            if (this.getReserva(livro) != null) {
+                System.out.println("Livro já reservado.");
+                return false;
+            }
+            
+            if (!tipoUsuario.podeReservar(this)) {
+                System.out.println("Limite máximo de reservas.");
+                return false;
+            }
+            
+            this.addReserva(livro);
+            
+            return true;
+        }
   
 	public List<Emprestimo> getEmprestimosLivro(Livro livro) {
-	    List<Emprestimo> emprestimosLivro = new ArrayList<Emprestimo>();
+	    List<Emprestimo> emprestimosLivro = new ArrayList<>();
+            
 	    for (Emprestimo emprestimo : emprestimos) {
 	        String codLivro = emprestimo.getCodigoLivro();
 	        if (codLivro.equals(livro.getCodigo())) {
@@ -100,6 +120,14 @@ public class Usuario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+        
+        public void addReserva(Livro livro) {
+            Reserva novaReserva = new Reserva(this, livro, Help.getHoje());
+            
+            livro.reservar(novaReserva);
+            
+            reservas.add(novaReserva);
+        }
 	
 	public Reserva getReserva(Livro livro) {
 		for (Reserva res : reservas) {

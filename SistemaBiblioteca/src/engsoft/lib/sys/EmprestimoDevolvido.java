@@ -21,14 +21,14 @@ public class EmprestimoDevolvido implements IEmprestimoEstado {
         return false;
     }
 
-	@Override
-	public boolean atrasado(Emprestimo emp) {
-		return false;
-	}
+    @Override
+    public boolean atrasado(Emprestimo emp) {
+        return false;
+    }
 
-	@Override
-	public String getStatus(Emprestimo emp) {
-		return "Devolvido";
-	}    
+    @Override
+    public String getStatus(Emprestimo emp) {
+        return "Devolvido";
+    }    
     
 }

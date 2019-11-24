@@ -1,5 +1,6 @@
 package engsoft.lib.sys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Livro implements ISubject {
@@ -23,6 +24,10 @@ public class Livro implements ISubject {
 		this.autores = autores;
 		this.edicao = edicao;
 		this.anoPublicado = anoPublicado;
+                
+                this.reservas = new ArrayList<>();
+                this.exemplares = new ArrayList<>(); 
+                this.observers = new ArrayList<>();
 	}
 	
 	public ExemplarLivro exemplarDisponivel() {
@@ -85,12 +90,19 @@ public class Livro implements ISubject {
 	}
 
 	public List<ExemplarLivro> getExemplares() {
-		return exemplares;
+		return this.exemplares;
 	}
 
 	public void setExemplares(List<ExemplarLivro> exemplares) {
 		this.exemplares = exemplares;
 	}
+        
+        public boolean reservar(Reserva reserva) {
+            this.reservas.add(reserva);
+            reservasChanged();
+            
+            return true;
+        }
 
 	public List<Reserva> getReservas() {
 		return reservas;

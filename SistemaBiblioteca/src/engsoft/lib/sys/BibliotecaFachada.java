@@ -40,11 +40,43 @@ public class BibliotecaFachada {
 	}
 	
 	public void realizarReserva(String codUsuario, String codLivro) {
-		
+            Usuario usuario = getUsuario(codUsuario);
+            Livro livro = getLivro(codLivro);
+            
+            if (usuario.reservarLivro(livro)) {
+                System.out.println(Mensagens.RESERVAR_LIVRO_SUCESSO);
+            }
 	}
 	
 	public void consultarLivro(String codLivro) {
+            Livro livro = getLivro(codLivro);
+            
+            System.out.println("Livro " + livro.getCodigo());
+            System.out.println("TÃ­tulo: " + livro.getTitulo());
+            
+            System.out.println("Reservas: " + livro.getReservas().size());
+            for (Reserva reserva: livro.getReservas()) {
+                Usuario usuario = reserva.getUsuario();
+                System.out.println("- " + usuario.getNome() + " reservado em " + reserva.getDataReserva());
+            }
 
+            System.out.println("Exemplares:");
+            for (ExemplarLivro exemplar: livro.getExemplares()) {
+                System.out.print("- CÃ³digo: " + exemplar.getCodigoExemplar() 
+                    + " | Status: " + exemplar.getEstado().getStatus()
+                );
+                
+                if (exemplar.getEstado().getStatus().equals("Emprestado")) {
+                    Emprestimo emp = exemplar.getEmprestimo();
+                    System.out.print(
+                        " | UsuÃ¡rio: " + emp.getUsuario().getNome()
+                        + " | Data do emprÃ©stimo: " + emp.getDataEmprestimo()
+                        + " | Data de devoluÃ§Ã£o: " + emp.getDataDevolucao()
+                    );
+                }
+                
+                System.out.println("");
+            }
 	}
 	
 	public void consultarUsuario(String codUsuario) {
@@ -52,7 +84,7 @@ public class BibliotecaFachada {
 		List<Emprestimo> emprestimos = usuario.getEmprestimos();
 		List<Reserva> reservas = usuario.getReservas();
 	
-		String resposta = "Consulta para o usuário " + usuario.getNome() + "\nEmpréstimos: \n";
+		String resposta = "Consulta para o usuï¿½rio " + usuario.getNome() + "\nEmprï¿½stimos: \n";
 		
 		for (Emprestimo emp : emprestimos) {
 			String livro = emp.getTituloLivro();
@@ -63,7 +95,7 @@ public class BibliotecaFachada {
 			if (status == "Devolvido") {
 				respEmp += "Devolvido em " + emp.getDataDevolucao().toString() + ".";
 			} else {
-				respEmp += "Devolução prevista para" + emp.getDataDevolucao().toString() + ".";
+				respEmp += "Devoluï¿½ï¿½o prevista para" + emp.getDataDevolucao().toString() + ".";
 			}
 			
 			resposta += respEmp + "\n";
