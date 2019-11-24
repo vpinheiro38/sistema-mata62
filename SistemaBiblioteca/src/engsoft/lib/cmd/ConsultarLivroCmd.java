@@ -10,6 +10,6 @@ public class ConsultarLivroCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		this.fachada.consultarLivro(args[0]);
+		this.fachada.consultarLivro(args[1]);
 	}
 }

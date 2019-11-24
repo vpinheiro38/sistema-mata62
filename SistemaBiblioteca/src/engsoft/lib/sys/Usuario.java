@@ -17,8 +17,12 @@ public class Usuario {
 	
 	private ITipoUsuario tipoUsuario;
 	
-	public Usuario(ITipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public Usuario(String codigo, String nome, ITipoUsuario tipoUsuario) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.tipoUsuario = tipoUsuario;
+        this.reservas = new ArrayList<>();
+        this.emprestimos = new ArrayList<>();    
 	}
 	
 	public boolean criarEmprestimo(ExemplarLivro exemplar) {
@@ -28,7 +32,7 @@ public class Usuario {
 			Date dataEmprestimo = Help.getHoje();
 			Date dataDevolucao = Help.criarData(this.tipoUsuario.getTempoLimiteEmprestimo());
 			
-			Emprestimo emp = new Emprestimo(dataEmprestimo, dataDevolucao);
+			Emprestimo emp = new Emprestimo(this, dataEmprestimo, dataDevolucao);
 			if (exemplar.emprestar(emp)) {
 				emprestimos.add(emp);
 				removeReserva(exemplar.getLivro());
@@ -39,12 +43,29 @@ public class Usuario {
 		
 		return podeEmprestar;
 	}
+        
+	public boolean reservarLivro(Livro livro) {
+	    if (this.getReserva(livro) != null) {
+	        System.out.println("Livro já reservado.");
+	        return false;
+	    }
+	    
+	    if (!tipoUsuario.podeReservar(this)) {
+	        System.out.println("Limite máximo de reservas.");
+	        return false;
+	    }
+	    
+	    this.addReserva(livro);
+	    
+	    return true;
+	}
   
 	public List<Emprestimo> getEmprestimosLivro(Livro livro) {
-	    List<Emprestimo> emprestimosLivro = new ArrayList<Emprestimo>();
+	    List<Emprestimo> emprestimosLivro = new ArrayList<>();
+            
 	    for (Emprestimo emprestimo : emprestimos) {
-	        String codLivro = emprestimo.getCodigoLivro();
-	        if (codLivro.equals(livro.getCodigo())) {
+	        // String codLivro = emprestimo.getCodigoLivro();
+	        if (livro == emprestimo.getExemplar().getLivro()) {
 	            emprestimosLivro.add(emprestimo);
 	        }
 	    }
@@ -56,7 +77,7 @@ public class Usuario {
 	    List<Emprestimo> emprestimosLivro = this.getEmprestimosLivro(livro);
 	
 	    for (Emprestimo emprestimo: emprestimosLivro) {
-	        if (emprestimo.getCodigoLivro().equals(livro.getCodigo())) {
+	        if (emprestimo.getLivro() == livro) {
 	            boolean resp = emprestimo.devolver();
 	
 	            if (resp)
@@ -77,6 +98,7 @@ public class Usuario {
 		for (Reserva res : reservas) {
 			if (res.getLivro() == livro) {
 				reservas.remove(res);
+				livro.removerReserva(res);
 				return true;
 			}
 		}
@@ -90,16 +112,18 @@ public class Usuario {
 	public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
 	
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+        
+    public void addReserva(Livro livro) {
+        Reserva novaReserva = new Reserva(this, livro, Help.getHoje());
+        
+        livro.reservar(novaReserva);
+        
+        reservas.add(novaReserva);
+    }
 	
 	public Reserva getReserva(Livro livro) {
 		for (Reserva res : reservas) {
@@ -114,14 +138,8 @@ public class Usuario {
 	public List<Reserva> getReservas() {
 		return reservas;
 	}
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
 	
 	public List<Emprestimo> getEmprestimos() {
 		return emprestimos;
-	}
-	public void setEmprestimos(List<Emprestimo> emprestimo) {
-		this.emprestimos = emprestimo;
 	}
 }

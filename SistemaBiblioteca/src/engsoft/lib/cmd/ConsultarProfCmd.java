@@ -10,7 +10,7 @@ public class ConsultarProfCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		this.fachada.consultarProfessor(args[0]);
+		this.fachada.consultarProfessor(args[1]);
 	}
 
 }

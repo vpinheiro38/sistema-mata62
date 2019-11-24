@@ -10,7 +10,7 @@ public class EmprestimoCmd extends Comando {
 
 	@Override
 	public void executar(String[] args) {
-		this.fachada.realizarEmprestimo(args[0], args[1]);
+		this.fachada.realizarEmprestimo(args[1], args[2]);
 	}
 
 }

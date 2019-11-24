@@ -37,6 +37,11 @@ public class Professor implements ITipoUsuario, IObserver {
 		}
 		return true;
 	}
+        
+    @Override
+    public boolean podeReservar(Usuario usuario) {
+        return true;
+    }
 
 	@Override
 	public void update() {

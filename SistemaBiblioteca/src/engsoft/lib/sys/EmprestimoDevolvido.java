@@ -8,7 +8,7 @@ public class EmprestimoDevolvido implements IEmprestimoEstado {
 
     private EmprestimoDevolvido() {}
 
-    public static IEmprestimoEstado getInstance() {
+    public static EmprestimoDevolvido getInstance() {
         if (instance == null) {
             instance = new EmprestimoDevolvido();
         }
@@ -21,14 +21,14 @@ public class EmprestimoDevolvido implements IEmprestimoEstado {
         return false;
     }
 
-	@Override
-	public boolean atrasado(Emprestimo emp) {
-		return false;
-	}
+    @Override
+    public boolean atrasado(Emprestimo emp) {
+        return false;
+    }
 
-	@Override
-	public String getStatus(Emprestimo emp) {
-		return "Devolvido";
-	}    
+    @Override
+    public String getStatus(Emprestimo emp) {
+        return "Devolvido";
+    }    
     
 }

@@ -10,7 +10,7 @@ public class ReservarCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		this.fachada.realizarReserva(args[0], args[1]);
+		this.fachada.realizarReserva(args[1], args[2]);
 	}
 
 }

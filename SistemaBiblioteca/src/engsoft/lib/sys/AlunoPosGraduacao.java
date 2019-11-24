@@ -58,4 +58,10 @@ public class AlunoPosGraduacao implements ITipoUsuario {
 	public int getTempoLimiteEmprestimo() {
 		return 4;
 	}
+
+    @Override
+    public boolean podeReservar(Usuario usuario) {
+        if (usuario.getReservas().size() == getLimiteReserva()) return false;
+        else return true;
+    }
 }

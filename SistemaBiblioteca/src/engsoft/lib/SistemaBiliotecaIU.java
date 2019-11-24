@@ -29,29 +29,37 @@ public class SistemaBiliotecaIU {
 		SairCmd saiCmd = new SairCmd(facade);
 		
 		try {
-			s = new Scanner(System.in);
+            s = new Scanner(System.in);
 			
 			while (s.hasNext()) {
 				String cmd = s.next();
 				String[] arg = s.nextLine().split(" ");
-
-				switch(cmd) {
+				
+                switch(cmd) {
 					case "liv":
 						livCmd.executar(arg);
+                        break;
 					case "ntf":
 						ntfCmd.executar(arg);
+                        break;
 					case "usu":
 						usuCmd.executar(arg);
+						break;
 					case "dev":
 						devCmd.executar(arg);
+						break;
 					case "emp":
 						empCmd.executar(arg);
+                        break;
 					case "obs":
 						obsCmd.executar(arg);
+                        break;
 					case "res":
 						resCmd.executar(arg);
+                        break;
 					case "sai":
 						saiCmd.executar(arg);
+                        break;
 				}
 			}
 		} finally {
