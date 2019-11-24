@@ -10,7 +10,7 @@ public class ConsultarUsuarioCmd extends Comando {
 	
 	@Override
 	public void executar(String[] args) {
-		this.fachada.consultarUsuario(args[0]);
+		this.fachada.consultarUsuario(args[1]);
 	}
 
 }

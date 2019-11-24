@@ -5,6 +5,14 @@ import engsoft.lib.help.Help;
 public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	
 	private static EmprestimoEmAndamento instance;
+	private EmprestimoEmAndamento() {}
+	
+	public static EmprestimoEmAndamento getInstance() {
+		if (instance == null) {
+			instance = new EmprestimoEmAndamento();
+		}
+		return instance;
+	}
 	
 	@Override
 	public boolean devolver(Emprestimo emprestimo) {
@@ -17,12 +25,6 @@ public class EmprestimoEmAndamento implements IEmprestimoEstado {
 	    	return false;
 	}
    
-	public static IEmprestimoEstado getInstance() {
-		if (instance == null) {
-			instance = new EmprestimoEmAndamento();
-		}
-		return instance;
-	}
 	
 	@Override
 	public String getStatus(Emprestimo emp) {

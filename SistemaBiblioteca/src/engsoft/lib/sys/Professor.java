@@ -48,6 +48,4 @@ public class Professor implements ITipoUsuario, IObserver {
 		this.qntNotificacoes++;
 	}
 
-    
-
 }

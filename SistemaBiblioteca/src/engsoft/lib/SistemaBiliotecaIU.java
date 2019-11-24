@@ -10,14 +10,7 @@ import engsoft.lib.cmd.EmprestimoCmd;
 import engsoft.lib.cmd.ObservarCmd;
 import engsoft.lib.cmd.ReservarCmd;
 import engsoft.lib.cmd.SairCmd;
-import engsoft.lib.sys.AlunoGraduacao;
 import engsoft.lib.sys.BibliotecaFachada;
-import engsoft.lib.sys.ITipoUsuario;
-import engsoft.lib.sys.Livro;
-import engsoft.lib.sys.Usuario;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SistemaBiliotecaIU {
 
@@ -36,54 +29,37 @@ public class SistemaBiliotecaIU {
 		SairCmd saiCmd = new SairCmd(facade);
 		
 		try {
-                    Map<String, Livro> livros = new HashMap<>();
-                    Map<String, Usuario> usuarios = new HashMap<>();
-                    
-                   
-                    usuarios.put("igor", new Usuario("1234", "igor", new AlunoGraduacao()));
-                    livros.put("livro1", new Livro(
-                        "livro1", 
-                        "As cronicas", 
-                        "UFBA",
-                        new ArrayList<>(),
-                        1,
-                        2
-                    ));
-                    
-                    facade.setUsuarios(usuarios);
-                    facade.setLivros(livros);
-                    
-                    s = new Scanner(System.in);
+            s = new Scanner(System.in);
 			
 			while (s.hasNext()) {
 				String cmd = s.next();
-				String[] arg = s.next().split(" ");
-
-                                switch(cmd) {
+				String[] arg = s.nextLine().split(" ");
+				
+                switch(cmd) {
 					case "liv":
 						livCmd.executar(arg);
-                                                break;
+                        break;
 					case "ntf":
 						ntfCmd.executar(arg);
-                                                break;
+                        break;
 					case "usu":
 						usuCmd.executar(arg);
-                                                break;
+						break;
 					case "dev":
 						devCmd.executar(arg);
-                                                break;
+						break;
 					case "emp":
 						empCmd.executar(arg);
-                                                break;
+                        break;
 					case "obs":
 						obsCmd.executar(arg);
-                                                break;
+                        break;
 					case "res":
 						resCmd.executar(arg);
-                                                break;
+                        break;
 					case "sai":
 						saiCmd.executar(arg);
-                                                break;
+                        break;
 				}
 			}
 		} finally {

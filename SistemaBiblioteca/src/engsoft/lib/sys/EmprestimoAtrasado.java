@@ -6,7 +6,7 @@ public class EmprestimoAtrasado implements IEmprestimoEstado {
 	
 	private EmprestimoAtrasado() {}
 
-	public static IEmprestimoEstado getInstance() {
+	public static EmprestimoAtrasado getInstance() {
 		if (instance == null) {
 			instance = new EmprestimoAtrasado();
 		}

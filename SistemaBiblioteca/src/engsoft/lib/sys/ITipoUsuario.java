@@ -8,5 +8,5 @@ public interface ITipoUsuario {
 	public int getQntNotificacoes();
 
 	public boolean podeEmprestimo(Usuario usuario, Livro livro);
-        public boolean podeReservar(Usuario usuario);
+    public boolean podeReservar(Usuario usuario);
 }

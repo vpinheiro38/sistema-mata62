@@ -7,7 +7,7 @@ public class ExemplarDisponivel implements IExemplarEstado {
 	private static ExemplarDisponivel instance;
 	private ExemplarDisponivel() {}
 	
-	public static IExemplarEstado getInstance() {
+	public static ExemplarDisponivel getInstance() {
 		if (instance == null) {
 			instance = new ExemplarDisponivel();
 		}
@@ -29,7 +29,7 @@ public class ExemplarDisponivel implements IExemplarEstado {
 
 	@Override
 	public String getStatus() {
-		return "Disponível";
+		return "Disponï¿½vel";
 	}
 
 	@Override

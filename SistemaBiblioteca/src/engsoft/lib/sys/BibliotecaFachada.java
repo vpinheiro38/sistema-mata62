@@ -2,6 +2,7 @@ package engsoft.lib.sys;
 
 import java.util.List;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import engsoft.lib.help.Mensagens;
@@ -11,8 +12,9 @@ public class BibliotecaFachada {
 	private Map<String, Livro> livros;
 	private Map<String, Usuario> usuarios;
 	
-	public BibliotecaFachada() {
-		
+	public BibliotecaFachada () {
+        livros = new HashMap<>();
+        usuarios = new HashMap<>();
 	}
 	
 	public void realizarEmprestimo(String codUsuario, String codLivro) {
@@ -63,10 +65,10 @@ public class BibliotecaFachada {
             System.out.println("Exemplares:");
             for (ExemplarLivro exemplar: livro.getExemplares()) {
                 System.out.print("- Código: " + exemplar.getCodigoExemplar() 
-                    + " | Status: " + exemplar.getEstado().getStatus()
+                    + " | Status: " + exemplar.getStatus()
                 );
                 
-                if (exemplar.getEstado().getStatus().equals("Emprestado")) {
+                if (exemplar.getStatus().equals("Emprestado")) {
                     Emprestimo emp = exemplar.getEmprestimo();
                     System.out.print(
                         " | Usuário: " + emp.getUsuario().getNome()
@@ -136,6 +138,10 @@ public class BibliotecaFachada {
 		this.usuarios = usuarios;
 	}
 	
+	public void addUsuario(String nome, String codigo, ITipoUsuario tipoUsuario) {
+		this.usuarios.put(codigo, new Usuario(codigo, nome, tipoUsuario));
+	}
+	
 	public Usuario getUsuario(String codigo) {
 		return this.usuarios.get(codigo);
 	}
@@ -152,4 +158,7 @@ public class BibliotecaFachada {
 		return this.livros.get(codigo);
 	}
 	
+	public void addLivro(String codigo, String titulo, String editora, List<String> autores, int edicao, int anoPublicado) {
+		this.livros.put(codigo, new Livro(codigo, titulo, editora, autores, edicao, anoPublicado));
+	}
 }

@@ -7,7 +7,6 @@ public class Livro implements ISubject {
 	
 	private String codigo;
 	private String titulo;
-	
 	private String editora;
 	private List<String> autores;
 	private int edicao;
@@ -25,9 +24,9 @@ public class Livro implements ISubject {
 		this.edicao = edicao;
 		this.anoPublicado = anoPublicado;
                 
-                this.reservas = new ArrayList<>();
-                this.exemplares = new ArrayList<>(); 
-                this.observers = new ArrayList<>();
+        this.reservas = new ArrayList<>();
+        this.exemplares = new ArrayList<>(); 
+        this.observers = new ArrayList<>();
 	}
 	
 	public ExemplarLivro exemplarDisponivel() {
@@ -92,25 +91,21 @@ public class Livro implements ISubject {
 	public List<ExemplarLivro> getExemplares() {
 		return this.exemplares;
 	}
-
-	public void setExemplares(List<ExemplarLivro> exemplares) {
-		this.exemplares = exemplares;
-	}
         
-        public boolean reservar(Reserva reserva) {
-            this.reservas.add(reserva);
-            reservasChanged();
-            
-            return true;
-        }
+    public boolean reservar(Reserva reserva) {
+        this.reservas.add(reserva);
+        reservasChanged();
+        
+        return true;
+    }
 
 	public List<Reserva> getReservas() {
 		return reservas;
 	}
 
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-		reservasChanged();
+	public void removerReserva(Reserva reserva) {
+		int index = reservas.indexOf(reserva);
+		reservas.remove(index);
 	}
 	
 }

@@ -8,7 +8,7 @@ public class EmprestimoDevolvido implements IEmprestimoEstado {
 
     private EmprestimoDevolvido() {}
 
-    public static IEmprestimoEstado getInstance() {
+    public static EmprestimoDevolvido getInstance() {
         if (instance == null) {
             instance = new EmprestimoDevolvido();
         }
