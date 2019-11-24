@@ -39,6 +39,18 @@ public class Livro implements ISubject {
 		return null;
 	}
 	
+	public List<ExemplarLivro> getExemplaresDisponiveis() {
+		ArrayList<ExemplarLivro> disponiveis = new ArrayList<>();
+		
+		for (ExemplarLivro exemplar : exemplares) {
+			if (exemplar.disponivel()) {
+				disponiveis.add(exemplar);
+			}
+		}
+		
+		return disponiveis;
+	}
+	
 	@Override
 	public boolean registerObserver(IObserver obs) {
 		observers.add(obs);

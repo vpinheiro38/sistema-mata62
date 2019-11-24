@@ -33,14 +33,9 @@ public class AlunoGraduacao implements ITipoUsuario {
 			System.out.println(Mensagens.MAXIMO_EMPRESTIMOS);
 			return false;
 		}
-		
-		if (usuario.getReserva(livro) != null) {
-			if (livro.getReservas().size() < livro.getExemplares().size()) {
-				System.out.println(Mensagens.QNT_RESERVAS_LIVRO_RESERVADO);
-				return false;
-			}
-		} else {			
-			if (livro.getReservas().size() >= livro.getExemplares().size()) {
+
+		if (usuario.getReserva(livro) == null) {
+			if (livro.getReservas().size() >= livro.getExemplaresDisponiveis().size()) {
 				System.out.println(Mensagens.QNT_RESERVAS_LIVRO_NAO_RESERVADO);
 				return false;
 			}
@@ -61,8 +56,10 @@ public class AlunoGraduacao implements ITipoUsuario {
         
     @Override
     public boolean podeReservar(Usuario usuario) {
-        if (usuario.getReservas().size() == getLimiteReserva()) return false;
-        else return true;
+        if (usuario.getReservas().size() == getLimiteReserva())
+        	return false;
+        else
+        	return true;
     }
 
 }

@@ -9,11 +9,11 @@ public class Professor implements ITipoUsuario, IObserver {
 	public int qntNotificacoes = 0;
 	
 	public int getLimiteEmprestimo() {
-		return 7;
+		return -1;
 	}
 	
 	public int getTempoLimiteEmprestimo() {
-		return -1;
+		return 7;
 	}
 
 	@Override
@@ -40,7 +40,10 @@ public class Professor implements ITipoUsuario, IObserver {
         
     @Override
     public boolean podeReservar(Usuario usuario) {
-        return true;
+        if (usuario.getReservas().size() == getLimiteReserva())
+        	return false;
+        else
+        	return true;
     }
 
 	@Override
